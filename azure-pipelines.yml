@@ -18,3 +18,8 @@ steps:
 
 - script: dotnet test --logger trx --no-build --configuration $(buildConfiguration)
   displayName: 'Run unit tests'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '**/TEST-*.xml'

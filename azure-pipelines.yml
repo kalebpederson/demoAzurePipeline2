@@ -18,3 +18,9 @@ steps:
 
 - script: dotnet test --no-build --configuration $(buildConfiguration)
   displayName: 'Test Application'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'VSTest'
+    testResultsFiles: '*.trx'
+    mergeTestResults: true

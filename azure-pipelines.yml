@@ -16,7 +16,7 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build Application'
 
-- script: dotnet test --no-build --configuration $(buildConfiguration)
+- script: dotnet test --logger=trx --no-build --configuration $(buildConfiguration)
   displayName: 'Test Application'
 
 - task: PublishTestResults@2

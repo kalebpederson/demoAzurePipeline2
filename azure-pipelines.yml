@@ -23,3 +23,9 @@ steps:
   inputs:
     testResultsFormat: 'VSTest'
     testResultsFiles: '**/*.trx'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.SourcesDirectory)/DemoWebApp/bin/$(buildConfiguration)/netcoreapp2.2'
+    ArtifactName: 'WebApp'
+    publishLocation: 'Container'

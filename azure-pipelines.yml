@@ -12,7 +12,16 @@ pool:
 variables:
   buildConfiguration: 'Release'
 
+
+
 steps:
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      sudo apt install sysstat
+      nohup pidstat -p ALL --human -T ALL 1 30 > /tmp/pidstat.out
+
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build our app: dotnet build $(buildConfiguration)'
 
@@ -21,7 +30,7 @@ steps:
     command: 'test'
     arguments: '--collect:"Code Coverage"'
   
-
+ 
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(Build.SourcesDirectory)/DemoWebApp/bin/$(buildConfiguration)/netcoreapp2.2/'
@@ -33,3 +42,9 @@ steps:
     PathtoPublish: '$(Build.SourcesDirectory)/static/'
     ArtifactName: 'static'
     publishLocation: 'Container'
+
+- task: Bash@3
+  inputs:
+    targetType: 'inline'
+    script: |
+      cat /tmp/pidstat.out
